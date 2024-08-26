@@ -25,13 +25,14 @@ interface Props {
   showFollowupQuestions?: boolean;
 }
 
-export const Answer = ({ answer, onCitationClicked, onExectResultClicked, onFollowupQuestionClicked, showFollowupQuestions, }: Props) => {
+export const Answer = ({ answer, onCitationClicked, onExectResultClicked, onFollowupQuestionClicked, showFollowupQuestions = true, }: Props) => {
+  const followupQuestions = answer.context?.followup_questions;
   const initializeAnswerFeedback = (answer: AskResponse) => {
     if (answer.message_id == undefined) return undefined
     if (answer.feedback == undefined) return undefined
     if (answer.feedback.split(',').length > 1) return Feedback.Negative
     if (Object.values(Feedback).includes(answer.feedback)) return answer.feedback
-    return Feedback.Neutral
+    return Feedback.Neutral;
   }
 
   const [isRefAccordionOpen, { toggle: toggleIsRefAccordionOpen }] = useBoolean(false)
@@ -302,7 +303,7 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked, onFoll
           </Stack>
         )}
         <Stack horizontal className={styles.answerFooter}>
-          {!!followupQuestions?.length && onFollowupQuestionClicked && (
+          {!!followupQuestions?.length && showFollowupQuestions && onFollowupQuestionClicked && (
             <Stack.Item>
               <Stack horizontal wrap className={`${!!parsedAnswer.citations.length ? styles.followupQuestionsList : ""}`} tokens={{ childrenGap: 6 }}>
                 <span className={styles.followupQuestionLearnMore}>Follow-up questions:</span>
