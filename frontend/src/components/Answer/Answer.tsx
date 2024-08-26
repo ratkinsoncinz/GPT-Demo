@@ -298,23 +298,24 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked, onFoll
             <Stack.Item grow>
               <Plot data={parsedAnswer.plotly_data.data} layout={parsedAnswer.plotly_data.layout} />
             </Stack.Item>
-            {!!followupQuestions?.length && onFollowupQuestionClicked && (
-              <Stack.Item>
-                <Stack horizontal wrap className={`${!!parsedAnswer.citations.length ? styles.followupQuestionsList : ""}`} tokens={{ childrenGap: 6 }}>
-                  <span className={styles.followupQuestionLearnMore}>Follow-up questions:</span>
-                  {followupQuestions.map((x, i) => {
-                    return (
-                      <a key={i} className={styles.followupQuestion} title={x} onClick={() => onFollowupQuestionClicked(x)}>
-                        {`${x}`}
-                      </a>
-                    );
-                  })}
-                </Stack>
-              </Stack.Item>
-            )}
+
           </Stack>
         )}
         <Stack horizontal className={styles.answerFooter}>
+          {!!followupQuestions?.length && onFollowupQuestionClicked && (
+            <Stack.Item>
+              <Stack horizontal wrap className={`${!!parsedAnswer.citations.length ? styles.followupQuestionsList : ""}`} tokens={{ childrenGap: 6 }}>
+                <span className={styles.followupQuestionLearnMore}>Follow-up questions:</span>
+                {followupQuestions.map((x, i) => {
+                  return (
+                    <a key={i} className={styles.followupQuestion} title={x} onClick={() => onFollowupQuestionClicked(x)}>
+                      {`${x}`}
+                    </a>
+                  );
+                })}
+              </Stack>
+            </Stack.Item>
+          )}
           {!!parsedAnswer.citations.length && (
             <Stack.Item onKeyDown={e => (e.key === 'Enter' || e.key === ' ' ? toggleIsRefAccordionOpen() : null)}>
               <Stack style={{ width: '100%' }}>
