@@ -21,9 +21,11 @@ interface Props {
   answer: AskResponse
   onCitationClicked: (citedDocument: Citation) => void
   onExectResultClicked: () => void
+  onFollowupQuestionClicked?: (question: string) => void;
+  showFollowupQuestions?: boolean;
 }
 
-export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Props) => {
+export const Answer = ({ answer, onCitationClicked, onExectResultClicked, onFollowupQuestionClicked, showFollowupQuestions, }: Props) => {
   const initializeAnswerFeedback = (answer: AskResponse) => {
     if (answer.message_id == undefined) return undefined
     if (answer.feedback == undefined) return undefined
@@ -296,6 +298,20 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
             <Stack.Item grow>
               <Plot data={parsedAnswer.plotly_data.data} layout={parsedAnswer.plotly_data.layout} />
             </Stack.Item>
+            {!!followupQuestions?.length && onFollowupQuestionClicked && (
+              <Stack.Item>
+                <Stack horizontal wrap className={`${!!parsedAnswer.citations.length ? styles.followupQuestionsList : ""}`} tokens={{ childrenGap: 6 }}>
+                  <span className={styles.followupQuestionLearnMore}>Follow-up questions:</span>
+                  {followupQuestions.map((x, i) => {
+                    return (
+                      <a key={i} className={styles.followupQuestion} title={x} onClick={() => onFollowupQuestionClicked(x)}>
+                        {`${x}`}
+                      </a>
+                    );
+                  })}
+                </Stack>
+              </Stack.Item>
+            )}
           </Stack>
         )}
         <Stack horizontal className={styles.answerFooter}>

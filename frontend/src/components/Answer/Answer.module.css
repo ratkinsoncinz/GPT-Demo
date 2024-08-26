@@ -201,3 +201,26 @@ sup {
     margin-bottom: 5px;
   }
 }
+
+.followupQuestionsList {
+  margin-top: 0.625em;
+}
+
+.followupQuestionLearnMore {
+  margin-right: 0.3125em;
+  font-weight: 600;
+  line-height: 1.5em;
+}
+
+.followupQuestion {
+  font-weight: 600;
+  line-height: 1.5em;
+  text-align: center;
+  border-radius: 0.25em;
+  padding: 0em 0.5em;
+  background: #e8ebfa;
+  color: black;
+  font-style: italic;
+  text-decoration: none;
+  cursor: pointer;
+}
